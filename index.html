@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#06101d">
+<meta name="description" content="SignalX futuristic 15M crypto signal generator">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icon.svg">\n<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/styles.css">
+<title>SignalX — Smart 15M Signals</title>
+</head>
+<body>
+<div class="app-shell">
+
+<header class="topbar">
+  <a class="brand" href="#">
+    <span class="brand-mark">✦</span>
+    <span class="brand-copy"><strong>SignalX</strong><small>Smart Signals. Better Trades.</small></span>
+  </a>
+
+  <nav class="desktop-nav">
+    <a class="active">Dashboard</a>
+    <a>Signals</a>
+    <a>Analytics</a>
+    <a>Watchlist</a>
+    <a>Settings</a>
+  </nav>
+
+  <div class="top-actions">
+    <span class="live"><i></i> LIVE</span>
+    <button id="installBtn" class="ghost hidden">Install App</button>
+    <button class="menu-btn" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">REAL-TIME CRYPTO SIGNALS</p>
+    <h1>TRADE SMARTER<br><span>TRADE FASTER</span></h1>
+    <p class="hero-text">AI-powered 15M market analysis with transparent confirmation data.</p>
+    <div class="hero-actions">
+      <button id="heroScanBtn" class="primary">▶ Scan Market</button>
+      <button class="secondary">☆ Watchlist</button>
+      <button class="secondary">⚙ Settings</button>
+    </div>
+  </div>
+  <div class="hero-orb" aria-hidden="true">
+    <div class="orb-ring"></div><div class="orb-core">✦</div>
+    <div class="orb-card"><b>530</b><span>Active Pairs</span><b>15M</b><span>Scanning</span><b class="green">● LIVE</b></div>
+  </div>
+</section>
+
+<section class="ticker" id="marketTicker">
+  <div>BTCUSDT <b>+1.24%</b></div>
+  <div>ETHUSDT <b>-0.32%</b></div>
+  <div>BNBUSDT <b>+0.56%</b></div>
+  <div>SOLUSDT <b>+2.14%</b></div>
+  <div>XRPUSDT <b>-0.18%</b></div>
+</section>
+
+<section class="panel">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">MARKET OVERVIEW</p>
+      <h2>24H Top Movers</h2>
+    </div>
+    <button id="refreshBtn" class="ghost">↻ Refresh</button>
+  </div>
+  <div id="movers" class="movers">
+    <div class="loading">Loading market data…</div>
+  </div>
+</section>
+
+<section class="panel" id="topSignalsPanel">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">🔥 OPPORTUNITY SCANNER</p>
+      <h2>Top 15M Signals</h2>
+      <p class="muted small">Automatically scans current top movers and ranks BUY/SELL candidates first.</p>
+    </div>
+    <button id="scanBtn" class="scan-btn">↻ Scan</button>
+  </div>
+  <div id="topSignals" class="top-signals">
+    <div class="loading">Analyzing top movers on 15M…</div>
+  </div>
+</section>
+
+<section class="panel analyzer-panel">
+  <div class="section-head compact">
+    <div>
+      <p class="eyebrow">LIVE ANALYSIS</p>
+      <h2>Analyze a Symbol</h2>
+    </div>
+  </div>
+  <label class="label" for="symbol">Binance Futures symbol</label>
+  <div class="searchrow">
+    <input id="symbol" value="BTCUSDT" autocomplete="off" placeholder="e.g. BTCUSDT">
+    <button id="analyzeBtn" class="primary">Analyze</button>
+  </div>
+  <p id="status" class="muted small"></p>
+</section>
+
+<section id="signal" class="panel signal hidden"></section>
+
+<section id="diagnostics" class="panel diagnostics hidden">
+  <div class="section-head compact">
+    <div>
+      <p class="eyebrow">ENGINE TRANSPARENCY</p>
+      <h2>Signal Diagnostics</h2>
+      <p class="muted small">Current 15M signal conditions</p>
+    </div>
+  </div>
+  <div id="diagnosticGrid" class="diagnostic-grid"></div>
+  <div id="diagnosticSummary" class="diagnostic-summary"></div>
+</section>
+
+<section class="panel send-panel">
+  <div>
+    <p class="eyebrow">DELIVERY</p>
+    <h2>Send Signal</h2>
+    <p class="muted small">Only confirmed BUY/SELL signals can be sent.</p>
+  </div>
+  <div class="channels">
+    <button class="channel active" data-channel="telegram">✈ Telegram</button>
+    <button class="channel" data-channel="whatsapp">◉ WhatsApp</button>
+  </div>
+  <div class="searchrow">
+    <input id="destination" placeholder="Telegram Chat ID / WhatsApp number">
+    <button id="sendBtn" class="primary">↗ Send</button>
+  </div>
+  <div class="delivery-key-row">
+    <input id="sendKey" type="password" autocomplete="off" placeholder="Delivery key (only if server key is enabled)">
+  </div>
+  <p class="muted small">Confirmed BUY/SELL only • API credentials stay on the server.</p>
+</section>
+
+<section class="panel pwa-panel"><p class="eyebrow">INSTALL</p><h2>Use SignalX as an App</h2><p class="muted small">Android/Chrome: Install App • iPhone/iPad: Safari → Share → Add to Home Screen • PC: Chrome/Edge → Install</p></section>\n\n</main>
+
+<footer>Signal generator only • No orders are executed</footer>
+
+<nav class="mobile-nav">
+  <a class="active">⌂<span>Home</span></a>
+  <a>⚡<span>Signals</span></a>
+  <a>☆<span>Watchlist</span></a>
+  <a>⚙<span>Settings</span></a>
+</nav>
+
+</div>
+
+<script src="/app.js"></script>
+<script>
+  document.getElementById("heroScanBtn")?.addEventListener("click", () => {
+    document.getElementById("scanBtn")?.click();
+    document.getElementById("topSignalsPanel")?.scrollIntoView({behavior:"smooth",block:"start"});
+  });
+</script>
+<script src="/gate-audit-ui.js" defer></script>
+<script src="/auto-refresh.js" defer></script>
+<script src="/diagnostic-ui.js" defer></script>
+<script src="/best-setup.js" defer></script>
+</body>
+</html>

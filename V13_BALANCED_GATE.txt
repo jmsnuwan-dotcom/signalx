@@ -1,0 +1,15 @@
+SignalX V13 Balanced Quality Gate
+
+Gate thresholds updated from the current V13.1 balanced version:
+- ADX >= 25
+- Directional edge >= 10
+- BUY score >= 72
+- SELL score >= 72
+- Confidence >= 70
+- Volume >= 0.80x
+- BUY RSI 50-68
+- SELL RSI 32-50
+
+Existing V12 indicator/scoring structure, trend alignment, MACD direction, structure, candle/pullback, choppy and extension checks are preserved.
+
+This is a threshold experiment for research. It does not guarantee more profitable signals.

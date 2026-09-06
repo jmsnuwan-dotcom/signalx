@@ -1,0 +1,10 @@
+Add this line to index.html immediately after auto-refresh.js:
+
+<script src="./diagnostic-ui.js" defer></script>
+
+The final order should be:
+
+<script src="./app.js"></script>
+<script src="./auto-refresh.js" defer></script>
+<script src="./diagnostic-ui.js" defer></script>
+</body>

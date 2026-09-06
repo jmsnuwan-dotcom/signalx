@@ -1,0 +1,4 @@
+
+.diagnostic{margin-top:16px;border-top:1px solid #202936;padding-top:12px}
+.diag-list{display:flex;flex-wrap:wrap;gap:7px;margin:7px 0 12px}
+.diag-chip{display:inline-block;padding:6px 8px;border-radius:8px;background:#111722;border:1px solid #273140;color:#cbd5e1;font-size:11px}
