@@ -22,3 +22,7 @@
 
 ## Important
 This is a signal generator, not an order-execution bot. The starter signal engine is a baseline and must be backtested/validated before being presented as accurate or profitable.
+
+
+## MTF Scalp Engine
+The active analyzer uses 1M primary entry timing with 3M and 5M momentum/trend confirmation plus 15M context. Indicators include EMA, RSI, MACD, ADX, ATR, volume, VWAP, structure, candle quality, chop filtering, and live entry timing.

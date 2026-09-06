@@ -399,3 +399,9 @@ footer{text-align:center;color:#4f6477;font-size:9px;padding:20px}.mobile-nav{di
 @media(max-width:760px){
   .pwa-panel{padding-bottom:15px}
 }
+
+
+.mtf-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.mtf-strip>div{padding:10px;border:1px solid rgba(100,180,255,.12);border-radius:10px;background:rgba(10,20,35,.55);text-align:center}
+.mtf-strip span{display:block;font-size:10px;opacity:.65;margin-bottom:4px}.mtf-strip b{font-size:11px}
+@media(max-width:520px){.mtf-strip{grid-template-columns:repeat(2,1fr)}}

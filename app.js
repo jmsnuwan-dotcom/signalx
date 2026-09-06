@@ -118,7 +118,7 @@ function renderSignal(signal) {
       <div class="signal-identity">
         <div class="coin-avatar">${String(signal.symbol || "?").slice(0,1)}</div>
         <div>
-          <p class="eyebrow">15 MINUTE SIGNAL</p>
+          <p class="eyebrow">MTF SCALP SIGNAL</p>
           <h2>${signal.symbol}</h2>
           <p class="muted">${signal.trend} trend • ${signal.strength || "WAIT"}</p>
         </div>
@@ -164,6 +164,12 @@ function renderSignal(signal) {
       ${signal.side === "BUY" ? "🟢" : signal.side === "SELL" ? "🔴" : "⚠"} 
       ${signal.reason || "Quality gate not satisfied."}
     </div>
+
+    ${signal.mtf ? `
+      <div class="mtf-strip">
+        ${Object.entries(signal.mtf).map(([tf,v]) => `<div><span>${tf}</span><b class="${v === "BULLISH" ? "green" : v === "BEARISH" ? "red" : ""}">${v}</b></div>`).join("")}
+      </div>
+    ` : ""}
   `;
 
   window.dispatchEvent(
@@ -183,15 +189,15 @@ async function analyze() {
     return;
   }
 
-  $("status").textContent = "Analyzing 15M candles…";
+  $("status").textContent = "Analyzing 1M + 3M + 5M + 15M candles…";
 
   try {
     const signal = await api(
-      "/api/signal?symbol=" + encodeURIComponent(symbol)
+      "/api/scalp-signal?symbol=" + encodeURIComponent(symbol)
     );
 
     renderSignal(signal);
-    $("status").textContent = "15M analysis completed.";
+    $("status").textContent = "MTF scalp analysis completed.";
   } catch (error) {
     clearSignalUI(error.message);
     $("status").textContent = `DATA UNAVAILABLE • ${error.message}`;
@@ -254,7 +260,7 @@ window.SignalXRenderTopSignals = renderTopSignals;
 
 async function loadTopSignals() {
   $("topSignals").innerHTML =
-    '<div class="loading">Analyzing top movers on 15M…</div>';
+    '<div class="loading">Analyzing top movers for scalp setups…</div>';
 
   try {
     const signals = await api("/api/top-signals");
