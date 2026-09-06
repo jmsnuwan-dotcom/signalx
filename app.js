@@ -1,4 +1,3 @@
-let selectedChannel = "telegram";
 let lastSignal = null;
 
 const $ = id => document.getElementById(id);
@@ -278,65 +277,6 @@ $("scanBtn").onclick = loadTopSignals;
 $("refreshBtn").onclick = () => {
   loadMovers();
   loadTopSignals();
-};
-
-document.querySelectorAll(".channel").forEach(button => {
-  button.onclick = () => {
-    selectedChannel = button.dataset.channel;
-
-    document
-      .querySelectorAll(".channel")
-      .forEach(x => x.classList.remove("active"));
-
-    button.classList.add("active");
-
-    $("destination").placeholder =
-      selectedChannel === "telegram"
-        ? "Telegram @username or Chat ID"
-        : "WhatsApp phone number";
-  };
-});
-
-$("sendBtn").onclick = async () => {
-  if (!lastSignal) {
-    return alert("Generate a signal first.");
-  }
-
-  if (lastSignal.side === "WAIT") {
-    return alert("WAIT is not a trade signal, so it cannot be sent.");
-  }
-
-  const destination = $("destination").value.trim();
-
-  if (!destination) {
-    return alert("Enter your destination.");
-  }
-
-  try {
-    const sendKey = $("sendKey")?.value?.trim() || "";
-    const response = await fetch("/api/send", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        ...(sendKey ? {"x-signalx-key": sendKey} : {})
-      },
-      body: JSON.stringify({
-        channel: selectedChannel,
-        destination,
-        signal: lastSignal
-      })
-    });
-
-    const result = await response.json().catch(() => ({}));
-
-    if (!response.ok || !result.ok) {
-      throw new Error(result.message || "Signal delivery failed.");
-    }
-
-    alert(result.message || "Signal delivered.");
-  } catch (error) {
-    alert(error?.message || "Send failed.");
-  }
 };
 
 let deferredPrompt = null;

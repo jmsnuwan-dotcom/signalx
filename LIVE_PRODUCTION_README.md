@@ -72,3 +72,7 @@ Then add the environment variables in the Vercel project before testing Telegram
 ## Important
 
 SignalX is a signal generator only. It does not execute exchange orders.
+
+
+## Simplified delivery UI
+The Telegram/WhatsApp delivery controls have been removed from the frontend. SignalX is currently view-only for generated signals.
