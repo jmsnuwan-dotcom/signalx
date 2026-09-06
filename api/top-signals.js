@@ -5,7 +5,7 @@
  *   1) Discover active Binance Futures USDT perpetuals.
  *   2) Apply 24H liquidity filter.
  *   3) Fast-screen the liquid universe with lightweight 15M data.
- *   4) Run the existing V12 buildSignal() engine on the strongest candidates.
+ *   4) Run the SAME MTF SCALP buildScalpSignal() engine used by Analyze Scalp Signal.
  *   5) Return the best 12 results.
  *
  * Stability additions only:
@@ -15,10 +15,10 @@
  * - controlled concurrency instead of large request bursts
  * - graceful handling of temporary Binance/API failures
  *
- * IMPORTANT: api/signal.js is not modified by this scanner.
+ * IMPORTANT: Top Scalp Signals and Analyze Scalp Signal must use the same engine.
  */
 
-import { buildSignal } from "./signal.js";
+import { buildScalpSignal } from "./scalp-signal.js";
 
 const BASE = "https://fapi.binance.com";
 const MIN_QUOTE_VOLUME_USDT = 5_000_000;
@@ -309,7 +309,7 @@ export default async function handler(req, res) {
       FULL_BATCH_SIZE,
       async (candidate) => {
         try {
-          const signal = await buildSignal(candidate.symbol);
+          const signal = await buildScalpSignal(candidate.symbol);
           return {
             ...signal,
             change24h: candidate.change24h,
@@ -354,7 +354,7 @@ export default async function handler(req, res) {
     res.setHeader("X-SignalX-Data-State", "LIVE");
     return res.status(200).json(usable);
   } catch (error) {
-    console.error("top-v13:", error);
+    console.error("top-scalp-v15:", error);
 
     res.setHeader("X-SignalX-Data-State", "UNAVAILABLE");
 
