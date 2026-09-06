@@ -6,7 +6,8 @@
 <meta name="theme-color" content="#06101d">
 <meta name="description" content="SignalX MTF crypto scalp signal generator">
 <link rel="manifest" href="/manifest.webmanifest">
-<link rel="icon" href="/icon.svg">\n<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/icon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="/styles.css">
 <title>SignalX — MTF Scalp Signals</title>
 </head>
@@ -20,8 +21,8 @@
   </a>
 
   <nav class="desktop-nav">
-    <a class="active">Dashboard</a>
-    <a>Signals</a>
+    <a class="nav-tab active" data-view="dashboardView">Dashboard</a>
+    <a class="nav-tab" data-view="signalsView">Signals</a>
     <a>Analytics</a>
     <a>Watchlist</a>
     <a>Settings</a>
@@ -36,6 +37,7 @@
 
 <main>
 
+<div id="dashboardView" class="app-view">
 <section class="hero">
   <div class="hero-copy">
     <p class="eyebrow">REAL-TIME CRYPTO SIGNALS</p>
@@ -117,13 +119,32 @@
   <div id="diagnosticSummary" class="diagnostic-summary"></div>
 </section>
 
-<section class="panel pwa-panel"><p class="eyebrow">INSTALL</p><h2>Use SignalX as an App</h2><p class="muted small">Android/Chrome: Install App • iPhone/iPad: Safari → Share → Add to Home Screen • PC: Chrome/Edge → Install</p></section>\n\n</main>
+<section class="panel pwa-panel"><p class="eyebrow">INSTALL</p><h2>Use SignalX as an App</h2><p class="muted small">Android/Chrome: Install App • iPhone/iPad: Safari → Share → Add to Home Screen • PC: Chrome/Edge → Install</p></section>
+</div>
+
+<section id="signalsView" class="app-view hidden">
+  <section class="panel">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">LIVE SCALP SIGNALS</p>
+        <h2>Current BUY / SELL</h2>
+        <p class="muted small">Only confirmed MTF scalp signals are shown here. WAIT candidates stay on the Dashboard.</p>
+      </div>
+      <button id="signalsRefreshBtn" class="ghost">↻ Refresh</button>
+    </div>
+    <div id="liveSignals" class="live-signals">
+      <div class="loading">Loading current scalp signals…</div>
+    </div>
+  </section>
+</section>
+
+</main>
 
 <footer>Signal generator only • No orders are executed</footer>
 
 <nav class="mobile-nav">
-  <a class="active">⌂<span>Home</span></a>
-  <a>⚡<span>Signals</span></a>
+  <a class="mobile-tab active" data-view="dashboardView">⌂<span>Home</span></a>
+  <a class="mobile-tab" data-view="signalsView">⚡<span>Signals</span></a>
   <a>☆<span>Watchlist</span></a>
   <a>⚙<span>Settings</span></a>
 </nav>

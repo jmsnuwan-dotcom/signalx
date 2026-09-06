@@ -1,4 +1,5 @@
 let lastSignal = null;
+let latestTopSignals = [];
 
 const $ = id => document.getElementById(id);
 
@@ -204,7 +205,83 @@ async function analyze() {
   }
 }
 
+function renderLiveSignals(items) {
+  const box = $("liveSignals");
+  if (!box) return;
+
+  const trades = Array.isArray(items)
+    ? items.filter(x => x && (x.side === "BUY" || x.side === "SELL"))
+        .sort((a, b) => Number(b.score ?? b.confidence ?? 0) - Number(a.score ?? a.confidence ?? 0))
+    : [];
+
+  if (!trades.length) {
+    box.innerHTML = `
+      <div class="empty-signals">
+        <strong>No confirmed BUY / SELL signals right now.</strong>
+        <small>WAIT candidates are still visible on the Dashboard.</small>
+      </div>`;
+    return;
+  }
+
+  box.innerHTML = trades.map(signal => {
+    const move = Number(signal.expectedMove || 0);
+    return `
+      <button class="live-signal-card ${signal.side.toLowerCase()}" data-symbol="${signal.symbol}">
+        <div class="live-signal-main">
+          <div>
+            <div class="live-signal-symbol">${signal.symbol}</div>
+            <div class="live-signal-meta">${signal.trend || "NEUTRAL"} • ${signal.strength || "HIGH"} • ${signal.score ?? "—"}/100</div>
+          </div>
+          <div class="live-signal-side">${signalBadge(signal)}</div>
+        </div>
+        <div class="live-signal-levels">
+          <div><small>Entry</small><b>${money(signal.entry)}</b></div>
+          <div><small>SL</small><b>${money(signal.sl)}</b></div>
+          <div><small>TP</small><b>${money(signal.tp)}</b></div>
+          <div><small>Move</small><b class="${signal.side === "SELL" ? "red" : "green"}">${move >= 0 ? "+" : ""}${move.toFixed(2)}%</b></div>
+        </div>
+      </button>`;
+  }).join("");
+
+  box.querySelectorAll(".live-signal-card").forEach(card => {
+    card.onclick = () => {
+      $("symbol").value = card.dataset.symbol;
+      showView("dashboardView");
+      analyze();
+      setTimeout(() => $("signal")?.scrollIntoView({behavior:"smooth", block:"start"}), 60);
+    };
+  });
+}
+
+window.SignalXRenderLiveSignals = renderLiveSignals;
+
+function showView(viewId) {
+  document.querySelectorAll(".app-view").forEach(view => {
+    view.classList.toggle("hidden", view.id !== viewId);
+  });
+
+  document.querySelectorAll("[data-view]").forEach(tab => {
+    tab.classList.toggle("active", tab.dataset.view === viewId);
+  });
+
+  if (viewId === "signalsView") {
+    renderLiveSignals(latestTopSignals);
+  }
+  window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+function bindViewTabs() {
+  document.querySelectorAll("[data-view]").forEach(tab => {
+    tab.addEventListener("click", event => {
+      event.preventDefault();
+      showView(tab.dataset.view);
+    });
+  });
+}
+
 function renderTopSignals(items) {
+  latestTopSignals = Array.isArray(items) ? items : [];
+  renderLiveSignals(latestTopSignals);
   const box = $("topSignals");
 
   if (!Array.isArray(items) || !items.length) {
@@ -267,6 +344,8 @@ async function loadTopSignals() {
     renderTopSignals(signals);
     window.dispatchEvent(new CustomEvent("top-signals:updated", { detail: signals }));
   } catch (error) {
+    latestTopSignals = [];
+    renderLiveSignals([]);
     $("topSignals").innerHTML =
       `<div class="error"><strong>DATA UNAVAILABLE</strong><small>${String(error.message || "Top signal scan failed.")}</small></div>`;
 
@@ -284,6 +363,11 @@ $("refreshBtn").onclick = () => {
   loadMovers();
   loadTopSignals();
 };
+
+$("signalsRefreshBtn")?.addEventListener("click", () => {
+  loadMovers();
+  loadTopSignals();
+});
 
 let deferredPrompt = null;
 
@@ -310,5 +394,6 @@ if ("serviceWorker" in navigator) {
     .catch(console.error);
 }
 
+bindViewTabs();
 loadMovers();
 loadTopSignals();

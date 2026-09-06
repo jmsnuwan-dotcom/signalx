@@ -1,4 +1,4 @@
-const CACHE = "signalx-live-v6";
+const CACHE = "signalx-live-v7";
 const STATIC_ASSETS = [
   "/",
   "/index.html",
